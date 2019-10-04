@@ -44,51 +44,51 @@ public class InformacoesSistema {
         HardwareAbstractionLayer hal = si.getHardware();
         OperatingSystem os = si.getOperatingSystem();
 
-        printOperatingSystem(os);
+//        printOperatingSystem(os);
 
-        logger.info("Checking computer system...");
-        printComputerSystem(hal.getComputerSystem());
+//        logger.info("Checking computer system...");
+//        printComputerSystem(hal.getComputerSystem());
 
-        logger.info("Checking Processor...");
-        printProcessor(hal.getProcessor());
+//        logger.info("Checking Processor...");
+//        printProcessor(hal.getProcessor());
 
-        logger.info("Checking Memory...");
-        printMemory(hal.getMemory());
+//        logger.info("Checking Memory...");
+//        printMemory(hal.getMemory());
 
         logger.info("Checking CPU...");
         printCpu(hal.getProcessor());
-
-        logger.info("Checking Processes...");
-        printProcesses(os, hal.getMemory());
-
-        logger.info("Checking Sensors...");
-        printSensors(hal.getSensors());
-
-        logger.info("Checking Power sources...");
-        printPowerSources(hal.getPowerSources());
-
-        logger.info("Checking Disks...");
-        printDisks(hal.getDiskStores());
-
-        logger.info("Checking File System...");
-        printFileSystem(os.getFileSystem());
-
-        logger.info("Checking Network interfaces...");
-        printNetworkInterfaces(hal.getNetworkIFs());
-
-        logger.info("Checking Network parameters...");
-        printNetworkParameters(os.getNetworkParams());
-
-        // hardware: displays
-        logger.info("Checking Displays...");
-        printDisplays(hal.getDisplays());
-
-        // hardware: USB devices
-        logger.info("Checking USB Devices...");
-        printUsbDevices(hal.getUsbDevices(true));
-
-        logger.info("Checking Sound Cards...");
-        printSoundCards(hal.getSoundCards());
+//
+//        logger.info("Checking Processes...");
+//        printProcesses(os, hal.getMemory());
+//
+//        logger.info("Checking Sensors...");
+//        printSensors(hal.getSensors());
+//
+//        logger.info("Checking Power sources...");
+//        printPowerSources(hal.getPowerSources());
+//
+//        logger.info("Checking Disks...");
+//        printDisks(hal.getDiskStores());
+//
+//        logger.info("Checking File System...");
+//        printFileSystem(os.getFileSystem());
+//
+//        logger.info("Checking Network interfaces...");
+//        printNetworkInterfaces(hal.getNetworkIFs());
+//
+//        logger.info("Checking Network parameters...");
+//        printNetworkParameters(os.getNetworkParams());
+//
+//        // hardware: displays
+//        logger.info("Checking Displays...");
+//        printDisplays(hal.getDisplays());
+//
+//        // hardware: USB devices
+//        logger.info("Checking USB Devices...");
+//        printUsbDevices(hal.getUsbDevices(true));
+//
+//        logger.info("Checking Sound Cards...");
+//        printSoundCards(hal.getSoundCards());
 
         StringBuilder output = new StringBuilder();
         for (int i = 0; i < oshi.size(); i++) {
@@ -102,10 +102,10 @@ public class InformacoesSistema {
 
     private static void printOperatingSystem(final OperatingSystem os) {
         oshi.add(String.valueOf(os));
-        oshi.add("Booted: " + Instant.ofEpochSecond(os.getSystemBootTime()));
-        oshi.add("Uptime: " + FormatUtil.formatElapsedSecs(os.getSystemUptime()));
-        oshi.add("Running with" + (os.isElevated() ? "" : "out") + " elevated permissions.");
-        oshi.add("\n");
+//        oshi.add("Booted: " + Instant.ofEpochSecond(os.getSystemBootTime()));
+//        oshi.add("Uptime: " + FormatUtil.formatElapsedSecs(os.getSystemUptime()));
+//        oshi.add("Running with" + (os.isElevated() ? "" : "out") + " elevated permissions.");
+//        oshi.add("\n");
     }
 
     private static void printComputerSystem(final ComputerSystem computerSystem) {
@@ -140,21 +140,7 @@ public class InformacoesSistema {
         // Wait a second...
         Util.sleep(1000);
         long[] ticks = processor.getSystemCpuLoadTicks();
-        oshi.add("CPU, IOWait, and IRQ ticks @ 1 sec:" + Arrays.toString(ticks));
-        long user = ticks[TickType.USER.getIndex()] - prevTicks[TickType.USER.getIndex()];
-        long nice = ticks[TickType.NICE.getIndex()] - prevTicks[TickType.NICE.getIndex()];
-        long sys = ticks[TickType.SYSTEM.getIndex()] - prevTicks[TickType.SYSTEM.getIndex()];
-        long idle = ticks[TickType.IDLE.getIndex()] - prevTicks[TickType.IDLE.getIndex()];
-        long iowait = ticks[TickType.IOWAIT.getIndex()] - prevTicks[TickType.IOWAIT.getIndex()];
-        long irq = ticks[TickType.IRQ.getIndex()] - prevTicks[TickType.IRQ.getIndex()];
-        long softirq = ticks[TickType.SOFTIRQ.getIndex()] - prevTicks[TickType.SOFTIRQ.getIndex()];
-        long steal = ticks[TickType.STEAL.getIndex()] - prevTicks[TickType.STEAL.getIndex()];
-        long totalCpu = user + nice + sys + idle + iowait + irq + softirq + steal;
 
-        oshi.add(String.format(
-                "User: %.1f%% Nice: %.1f%% System: %.1f%% Idle: %.1f%% IOwait: %.1f%% IRQ: %.1f%% SoftIRQ: %.1f%% Steal: %.1f%%",
-                100d * user / totalCpu, 100d * nice / totalCpu, 100d * sys / totalCpu, 100d * idle / totalCpu,
-                100d * iowait / totalCpu, 100d * irq / totalCpu, 100d * softirq / totalCpu, 100d * steal / totalCpu));
         oshi.add(String.format("CPU load: %.1f%%", processor.getSystemCpuLoadBetweenTicks(prevTicks) * 100));
         double[] loadAverage = processor.getSystemLoadAverage(3);
         oshi.add("CPU load averages:" + (loadAverage[0] < 0 ? " N/A" : String.format(" %.2f", loadAverage[0]))
